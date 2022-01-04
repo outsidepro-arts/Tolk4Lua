@@ -1,7 +1,7 @@
 # TolkLua #
 TolkLua is a a bridge of [Tolk library](https://github.com/dkager/tolk) and Lua. Here is fully provided all API of.
 ## Dependencies ##
-+ [Lua any version](https://lua.org)
++ [Lua5.3](https://lua.org)
 + [Tolk](https://github.com/dkager/tolk)
 
 ## Installation ##

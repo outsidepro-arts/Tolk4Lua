@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://www.purebasic.com/namespace" version="1.0" creator="PureBasic 5.71 LTS (Windows - x64)">
+  <section name="config">
+    <options closefiles="1" openmode="0" name="TolkLua"/>
+  </section>
+  <section name="data">
+    <explorer view="..\..\..\PB\" pattern="0"/>
+    <log show="1"/>
+    <lastopen date="2022-01-04 07:42" user="denis" host="OUTSIDEPRO-PC"/>
+  </section>
+  <section name="files">
+    <file name="includefix\Tolk.pb">
+      <config load="0" scan="1" panel="1" warn="1" lastopen="0" panelstate="++"/>
+      <fingerprint md5="d3756792785d0cd27055ca087d9aa127"/>
+    </file>
+    <file name="modules\Lua-PureBasic\Libraries\Lua\Lua.pbi">
+      <config load="0" scan="1" panel="1" warn="0" lastopen="0" panelstate="+++++"/>
+    </file>
+    <file name="sources\tolklua.pb">
+      <config load="1" scan="1" panel="1" warn="1" lastopen="1" panelstate="++"/>
+      <fingerprint md5="04427362212a2de8a89da211d359d39e"/>
+    </file>
+  </section>
+  <section name="targets">
+    <target name="Build X64" enabled="1" default="1">
+      <inputfile value="sources\tolklua.pb"/>
+      <outputfile value="build\x64\tolklua.dll"/>
+      <compiler version="PureBasic 5.71 LTS (Windows - x64)"/>
+      <executable value="build\x64\tolklua.dll"/>
+      <options xpskin="1" debug="1"/>
+      <format exe="dll" cpu="0"/>
+    </target>
+    <target name="Build X86" enabled="1" default="0">
+      <inputfile value="sources\tolklua.pb"/>
+      <outputfile value="build\x86\tolklua.dll"/>
+      <compiler version="PureBasic 5.71 LTS (Windows - x86)"/>
+      <executable value="build\x86\tolklua.dll"/>
+      <options xpskin="1" debug="1"/>
+      <format exe="dll" cpu="0"/>
+    </target>
+  </section>
+</project>

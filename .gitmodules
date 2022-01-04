@@ -1,0 +1,6 @@
+[submodule "modules/Lua-PureBasic"]
+	path = modules/Lua-PureBasic
+	url = https://github.com/Dadido3/Lua-PureBasic.git
+[submodule "modules/tolk"]
+	path = modules/tolk
+	url = https://github.com/dkager/tolk.git

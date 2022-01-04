@@ -36,3 +36,6 @@ I am gonna replenish the tests examples where you can look how it works and how 
 <em>Please note:</em> if you would run these test examples, you have to either place the tolk content and this bridge to main Lua distributive directory or place it at the tests directory before run each of (see the installation section).
 ## License ##
 This bridge obeys under Tolk library license. Please look it at main Tolk repository.
+
+## Contribution ##
+This bridge written in collaboration of [Sergey Parshakoff](https://github.com/electrik-spb). Sergey teaches me in programming skills from 2015-th and we made many projects together. When I've asked him the help to understand this trouble,  he has started this first, then I've kept developing and finalizing of. Thank you, Sergey!

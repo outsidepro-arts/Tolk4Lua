@@ -7,7 +7,7 @@
   <section name="data">
     <explorer view="..\..\..\PB\" pattern="0"/>
     <log show="1"/>
-    <lastopen date="2022-01-04 07:42" user="denis" host="OUTSIDEPRO-PC"/>
+    <lastopen date="2022-01-04 08:00" user="denis" host="OUTSIDEPRO-PC"/>
   </section>
   <section name="files">
     <file name="includefix\Tolk.pb">
@@ -19,7 +19,7 @@
     </file>
     <file name="sources\tolklua.pb">
       <config load="1" scan="1" panel="1" warn="1" lastopen="1" panelstate="++"/>
-      <fingerprint md5="04427362212a2de8a89da211d359d39e"/>
+      <fingerprint md5="4e644871b4af52401358e8e13daa3975"/>
     </file>
   </section>
   <section name="targets">

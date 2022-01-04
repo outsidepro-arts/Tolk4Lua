@@ -1,4 +1,8 @@
-﻿EnableExplicit
+﻿; TolkLua - a bridge of Tolk library and Lua
+; Copyright (C), Outsidepro Arts & Electrik-SPB, 2021-2022
+; Tolk library written by Davy Kager (Copyright:      (c) 2014-2016, Davy Kager <mail@davykager.nl>)
+
+EnableExplicit
 XIncludeFile "..\includefix\tolk.pb"
 XIncludeFile "..\modules\Lua-PureBasic\Libraries\Lua\lua.pbi"
 

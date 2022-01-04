@@ -2,6 +2,13 @@ tolk = require "tolklua"
 gui = require "iuplua"
 gui.SetGlobal("UTF8MODE", "Yes")
 
+iuptoboolean = {
+["ON"] = true,
+[1] = true,
+["OFF"] = false,
+[0] = false
+}
+
 checkLoadedBtn = gui.button{title="Check Tolk loading status"}
 function checkLoadedBtn:action(	)
 local msg = string.format("Tolk library now is %s!", ({[false]="not loaded", [true]="loaded"})[tolk.IsLoaded()])
@@ -20,14 +27,14 @@ end
 trySAPICheck = gui.toggle{title="Try SAPI 5 when output is used"}
 
 function trySAPICheck:action(state)
-tolk.TrySAPI(state)
+tolk.TrySAPI(iuptoboolean[state])
 return gui.DEFAULT
 end
 
 preferSAPICheck = gui.toggle{title="Prefer SAPI 5 when it is trying"}
 
 function preferSAPICheck:action(state)
-tolk.PreferSAPI(state)
+tolk.PreferSAPI(iuptoboolean[state])
 return gui.DEFAULT
 end
 
@@ -61,10 +68,10 @@ outputBtn = gui.button{title="Output!", ACTIVE="No"}
 function outputBtn:action()
 local methods = {
 function(text)
-return tolk.Output(text, interruptWhenOutputCheck.value)
+return tolk.Output(text, iuptoboolean[interruptWhenOutputCheck.value])
 end,
 function(text)
-return tolk.Speak(text, interruptWhenOutputCheck.value)
+return tolk.Speak(text, iuptoboolean[interruptWhenOutputCheck.value])
 end,
 function(text)
 return tolk.Braille(text)
@@ -100,6 +107,7 @@ gui.frame{
 title="Output",
 ACTIVE=({[true]="Yes",[false]="No"})[tolk.IsLoaded()],
 gui.vbox{
+gui.label{title="Output method:"},
 usedOutputMethodCombo,
 interruptWhenOutputCheck,
 gui.label{title="Output text:"},

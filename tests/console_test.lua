@@ -17,11 +17,11 @@ end
 
 os.execute([[
 @echo off
-chcp 65001
+chcp 1251
 ]])
 print([[Welcome to Tolk ScreenReader library wrapper test!
 The Tolk library written by Davy Kager.
-The TolkLua bridge written by denis Shishkin and Sergey Parshakoff.
+The bridge DLL written by denis Shishkin and Sergey Parshakoff.
 You may close this test at any time just typing the \"exit\" in this console."
 ]])
 print("Attempting to load the Tolk library...")

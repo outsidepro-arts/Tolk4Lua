@@ -21,7 +21,7 @@ chcp 65001
 ]])
 print([[Welcome to Tolk ScreenReader library wrapper test!
 The Tolk library written by Davy Kager.
-The wrapper written by denis Shishkin.
+The TolkLua bridge written by denis Shishkin and Sergey Parshakoff.
 You may close this test at any time just typing the \"exit\" in this console."
 ]])
 print("Attempting to load the Tolk library...")

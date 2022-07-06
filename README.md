@@ -11,25 +11,25 @@ TolkLua is a a bridge of [Tolk library](https://github.com/dkager/tolk) and Lua.
 Please note that both the Tolk content and this Tolk bridge should be positioned at the same directory.
 
 ## Usage ##
-The bridge translates all API functions presented in Tolk library. All types converts to appropriated native, so you not have to convert it by itself.
+The bridge translates all API functions presented in Tolk library in mixed case. All types converts to appropriated native, so you not have to convert it by itself.
 ### Including the Tolk using TolkLua wrapper ###
-When you include the bridge it returns the table with all methods without "Tolk_" prefix.
+When you include the bridge it returns the table with all methods without "Tolk_" prefix and in mixed case.
 ```lua
 tolk = require "tolklua"
-tolk.Load()
+tolk.load()
 ```
   ### Using the Tolk library through the TolkLua bridge ###
 As I said above, all types converts into native type both one way and the other.
 ```lua
-tolk.IsLoaded()
+tolk.isLoaded()
   > true
-tolk.Output("This is a test", true)
+tolk.output("This is a test", true)
 ```
 You don't need to do any manipulations with returning and passing strings.
 ```lua
-tolk.DetectScreenReader()
+tolk.detectScreenReader()
   > NVDA
-tolk.Speak("This is a test", true)
+tolk.speak("This is a test", true)
 ```
 ## Tests ##
 I am gonna replenish the tests examples where you can look how it works and how it can be used. Please look at "test" directory and explore the interesting one.

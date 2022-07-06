@@ -11,30 +11,30 @@ iuptoboolean = {
 
 checkLoadedBtn = gui.button{title="Check Tolk loading status"}
 function checkLoadedBtn:action(	)
-local msg = string.format("Tolk library now is %s!", ({[false]="not loaded", [true]="loaded"})[tolk.IsLoaded()])
-msg = msg..string.format('\nTolk %s send a text to speech synthesizer.', ({[true]="can",[false]="cannot"})[tolk.HasSpeech()])
-msg = msg..string.format('\nTolk %s send a text to braille display.', ({[true]="can",[false]="cannot"})[tolk.HasBraille()])
+local msg = string.format("Tolk library now is %s!", ({[false]="not loaded", [true]="loaded"})[tolk.isLoaded()])
+msg = msg..string.format('\nTolk %s send a text to speech synthesizer.', ({[true]="can",[false]="cannot"})[tolk.hasSpeech()])
+msg = msg..string.format('\nTolk %s send a text to braille display.', ({[true]="can",[false]="cannot"})[tolk.hasBraille()])
 gui.Message("Tolk library check", msg)
 return gui.DEFAULT
 end
 
 detectSRBtn = gui.button{title="Detect currently running screenreader"}
 function detectSRBtn:action()
-gui.Message("Tolk library check", string.format("The currently running screenreader is %s.", tolk.DetectScreenReader()))
+gui.Message("Tolk library check", string.format("The currently running screenreader is %s.", tolk.detectScreenReader()))
 return gui.DEFAULT
 end
 
 trySAPICheck = gui.toggle{title="Try SAPI 5 when output is used"}
 
 function trySAPICheck:action(state)
-tolk.TrySAPI(iuptoboolean[state])
+tolk.trySAPI(iuptoboolean[state])
 return gui.DEFAULT
 end
 
 preferSAPICheck = gui.toggle{title="Prefer SAPI 5 when it is trying"}
 
 function preferSAPICheck:action(state)
-tolk.PreferSAPI(iuptoboolean[state])
+tolk.preferSAPI(iuptoboolean[state])
 return gui.DEFAULT
 end
 
@@ -68,13 +68,13 @@ outputBtn = gui.button{title="Output!", ACTIVE="No"}
 function outputBtn:action()
 local methods = {
 function(text)
-return tolk.Output(text, iuptoboolean[interruptWhenOutputCheck.value])
+return tolk.output(text, iuptoboolean[interruptWhenOutputCheck.value])
 end,
 function(text)
-return tolk.Speak(text, iuptoboolean[interruptWhenOutputCheck.value])
+return tolk.speak(text, iuptoboolean[interruptWhenOutputCheck.value])
 end,
 function(text)
-return tolk.Braille(text)
+return tolk.braille(text)
 end
 }
 if not methods[tonumber(usedOutputMethodCombo.value)](textForSpeakEdit.value) then
@@ -83,7 +83,7 @@ end
 return gui.DEFAULT
 end
 
-tolk.Load()
+tolk.load()
 
 mainWindow = gui.dialog{
 title="Tolk library test",
@@ -97,7 +97,7 @@ detectSRBtn
 },
 gui.frame{
 title="Configuration",
-ACTIVE=({[true]="Yes",[false]="No"})[tolk.IsLoaded()],
+ACTIVE=({[true]="Yes",[false]="No"})[tolk.isLoaded()],
 gui.vbox{
 trySAPICheck,
 preferSAPICheck
@@ -105,7 +105,7 @@ preferSAPICheck
 },
 gui.frame{
 title="Output",
-ACTIVE=({[true]="Yes",[false]="No"})[tolk.IsLoaded()],
+ACTIVE=({[true]="Yes",[false]="No"})[tolk.isLoaded()],
 gui.vbox{
 gui.label{title="Output method:"},
 usedOutputMethodCombo,
@@ -121,13 +121,13 @@ outputBtn
 mainWindow:showxy(gui.CENTER, gui.TOP)
 
 usedOutputMethodCombo[1] = "Output method (both for speaking and braille if one of available)"
-if tolk.HasSpeech() then
+if tolk.hasSpeech() then
 usedOutputMethodCombo.APPENDITEM = "Speak only"
 end
-if tolk.HasBraille() then
+if tolk.hasBraille() then
 usedOutputMethodCombo.APPENDITEM = "Braille only"
 end
 usedOutputMethodCombo.value = 1
 
 gui.MainLoop()
-tolk.Unload()
+tolk.unload()

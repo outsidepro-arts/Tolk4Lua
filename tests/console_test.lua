@@ -1,5 +1,3 @@
-tolk = require "tolklua"
-
 answerMap = setmetatable(
 {
 ["yes"]=true,
@@ -25,8 +23,8 @@ The bridge DLL written by denis Shishkin and Sergey Parshakoff.
 You may close this test at any time just typing the \"exit\" in this console."
 ]])
 print("Attempting to load the Tolk library...")
-tolk.load()
-if tolk.isLoaded() then
+tolk = require "tolklua"
+if tolk then
 print("The Tolk library successfully loaded!")
 print(string.format("Currently running screenreader: %s", tolk.detectScreenReader()))
 print("Checking the currently loaded Tolk abilities...")
@@ -112,4 +110,3 @@ goto terminate
 end
 ::terminate::
 print("Terminating the process...")
-tolk.unload()

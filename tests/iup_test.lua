@@ -11,7 +11,7 @@ iuptoboolean = {
 
 checkLoadedBtn = gui.button{title="Check Tolk loading status"}
 function checkLoadedBtn:action(	)
-local msg = string.format("Tolk library now is %s!", ({[false]="not loaded", [true]="loaded"})[tolk.isLoaded()])
+local msg = string.format("Tolk library now is %s!", ({[false]="not loaded", [true]="loaded"})[tolk ~= nil])
 msg = msg..string.format('\nTolk %s send a text to speech synthesizer.', ({[true]="can",[false]="cannot"})[tolk.hasSpeech()])
 msg = msg..string.format('\nTolk %s send a text to braille display.', ({[true]="can",[false]="cannot"})[tolk.hasBraille()])
 gui.Message("Tolk library check", msg)
@@ -83,8 +83,6 @@ end
 return gui.DEFAULT
 end
 
-tolk.load()
-
 mainWindow = gui.dialog{
 title="Tolk library test",
 gui.hbox{
@@ -97,7 +95,7 @@ detectSRBtn
 },
 gui.frame{
 title="Configuration",
-ACTIVE=({[true]="Yes",[false]="No"})[tolk.isLoaded()],
+ACTIVE=({[true]="Yes",[false]="No"})[tolk ~= nil],
 gui.vbox{
 trySAPICheck,
 preferSAPICheck
@@ -105,7 +103,7 @@ preferSAPICheck
 },
 gui.frame{
 title="Output",
-ACTIVE=({[true]="Yes",[false]="No"})[tolk.isLoaded()],
+ACTIVE=({[true]="Yes",[false]="No"})[tolk ~= nil],
 gui.vbox{
 gui.label{title="Output method:"},
 usedOutputMethodCombo,
@@ -130,4 +128,3 @@ end
 usedOutputMethodCombo.value = 1
 
 gui.MainLoop()
-tolk.unload()

@@ -33,22 +33,6 @@ TolkMethods()\name = #Null
 TolkMethods()\func = #Null
 EndMacro
 
-ProcedureC lua_tolk_load(*l.lua_State)
-tolk::Load()
-EndProcedure
-AddMethod("load", @Lua_tolk_load())
-
-ProcedureC.i Lua_Tolk_IsLoaded(*l.lua_State)
-lua_pushboolean(*l, tolk::IsLoaded()) 
-ProcedureReturn 1 ; число возвращаемых параметров.
-EndProcedure
-AddMethod("isLoaded",@LUA_Tolk_IsLoaded())
-
-ProcedureC Lua_Tolk_Unload(*l.lua_State)
-tolk::Unload()
-EndProcedure
-AddMethod("unload",@Lua_Tolk_Unload())
-
 ProcedureC Lua_Tolk_TrySAPI(*l.lua_State)
 Tolk::TrySAPI(checkboolean(*l,1))
 EndProcedure
@@ -122,11 +106,17 @@ ProcedureReturn 1
 EndProcedure
 AddMethod("silence",@Lua_Tolk_Silence())
 
+ProcedureC mtm_Destroy(*l.lua_State)
+Tolk::Unload()
+EndProcedure
+
 FinishMethods
 
 ;  Главная экспорт процедура.
 ; Её название состоит из двух частей: luaopen_, и название библиотеки. Первая часть предопределена, вторая - произвольная.
 ProcedureCDLL.i luaopen_tolklua(*l.lua_State)
+Tolk::Load()
+If Tolk::IsLoaded()
 Protected Dim FuncsArray.luaL_Reg(ListSize(TolkMethods()))
 ForEach TolkMethods()
 FuncsArray(ListIndex(TolkMethods())) = TolkMethods()
@@ -138,5 +128,13 @@ FreeMemory(TolkMethods()\name)
 Next
 FreeArray(FuncsArray())
 FreeList(TolkMethods())
+lua_newtable(*l)
+lua_pushvalue(*l, -2)
+lua_setfield(*l, -2, "__index")
+lua_pushcfunction(*l, @mtm_Destroy())
+lua_setfield(*l, -2, "__gc")
+lua_setmetatable(*l, -2)
 ProcedureReturn 1
+EndIf
+ProcedureReturn 0
 EndProcedure

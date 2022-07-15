@@ -7,7 +7,7 @@
   <section name="data">
     <explorer view="..\..\..\PB\" pattern="0"/>
     <log show="1"/>
-    <lastopen date="2022-07-14 01:20" user="denis" host="OUTSIDEPRO-PC"/>
+    <lastopen date="2022-07-15 03:34" user="denis" host="OUTSIDEPRO-PC"/>
   </section>
   <section name="files">
     <file name="includefix\Tolk.pb">
@@ -19,7 +19,7 @@
     </file>
     <file name="sources\tolklua.pb">
       <config load="1" scan="1" panel="1" warn="1" lastopen="1" panelstate="++"/>
-      <fingerprint md5="63e3f7af6133ef4d640677256c0918b5"/>
+      <fingerprint md5="82ba3bfc93c409dd772bb6a5a66866e6"/>
     </file>
   </section>
   <section name="targets">
@@ -30,7 +30,7 @@
       <executable value="build\x64\tolklua.dll"/>
       <options xpskin="1" debug="1"/>
       <format exe="dll" cpu="0"/>
-      <buildcount enable="1" value="2"/>
+      <buildcount enable="1" value="9"/>
       <versioninfo enable="1">
         <field0 value="1,%BUILDCOUNT,0,0"/>
         <field1 value="1,%BUILDCOUNT,0,0"/>

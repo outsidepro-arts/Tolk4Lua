@@ -129,8 +129,6 @@ Next
 FreeArray(FuncsArray())
 FreeList(TolkMethods())
 lua_newtable(*l)
-lua_pushvalue(*l, -2)
-lua_setfield(*l, -2, "__index")
 lua_pushcfunction(*l, @mtm_Destroy())
 lua_setfield(*l, -2, "__gc")
 lua_setmetatable(*l, -2)

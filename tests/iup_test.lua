@@ -2,6 +2,7 @@ tolk = require "tolklua"
 gui = require "iuplua"
 gui.SetGlobal("UTF8MODE", "Yes")
 
+-- We need the IUPP values conversion
 iuptoboolean = {
 ["ON"] = true,
 [1] = true,
@@ -28,6 +29,7 @@ trySAPICheck = gui.toggle{title="Try SAPI 5 when output is used"}
 
 function trySAPICheck:action(state)
 tolk.trySAPI(iuptoboolean[state])
+updateOutputMethods()
 return gui.DEFAULT
 end
 
@@ -35,6 +37,7 @@ preferSAPICheck = gui.toggle{title="Prefer SAPI 5 when it is trying"}
 
 function preferSAPICheck:action(state)
 tolk.preferSAPI(iuptoboolean[state])
+updateOutputMethods()
 return gui.DEFAULT
 end
 
@@ -48,6 +51,19 @@ else
 interruptWhenOutputCheck.ACTIVE = "Yes"
 end
 return gui.DEFAULT
+end
+
+-- Quick update output methods combobox
+function updateOutputMethods()
+	usedOutputMethodCombo[1] = nil
+	usedOutputMethodCombo[1] = "Output through all available methods"
+	if tolk.hasSpeech() then
+		usedOutputMethodCombo.APPENDITEM = "Speak"
+	end
+	if tolk.hasBraille() then
+		usedOutputMethodCombo.APPENDITEM = "Braille"
+	end
+	usedOutputMethodCombo.value = 1
 end
 
 
@@ -118,13 +134,6 @@ outputBtn
 
 mainWindow:showxy(gui.CENTER, gui.TOP)
 
-usedOutputMethodCombo[1] = "Output method (both for speaking and braille if one of available)"
-if tolk.hasSpeech() then
-usedOutputMethodCombo.APPENDITEM = "Speak only"
-end
-if tolk.hasBraille() then
-usedOutputMethodCombo.APPENDITEM = "Braille only"
-end
-usedOutputMethodCombo.value = 1
+updateOutputMethods()
 
 gui.MainLoop()

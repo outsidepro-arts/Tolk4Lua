@@ -1,3 +1,12 @@
+-- Patching the libraries loading paths
+package.cpath = package.cpath .. ";.\\..\\build\\"
+if os.getenv("processor_architecture") == "AMD64" then
+	package.cpath = package.cpath .. "x64"
+else
+	package.cpath = package.cpath .. "x86"
+end
+package.cpath = package.cpath .. "\\?.dll"
+
 tolk = require "tolklua"
 gui = require "iuplua"
 gui.SetGlobal("UTF8MODE", "Yes")

@@ -19,47 +19,35 @@ Procedure.i checkboolean(*l.lua_State, Index.i)
 	EndIf
 EndProcedure
 
-Global NewList TolkMethods.luaL_Reg()
-
-Macro AddMethod(FuncName, FuncPTR)
-	AddElement(TolkMethods())
-	TolkMethods()\name = UTF8(FuncName)
-	TolkMethods()\func = FuncPTR
-EndMacro
-
-Macro FinishMethods
-	AddElement(TolkMethods())
-	TolkMethods()\name = #Null
-	TolkMethods()\func = #Null
-EndMacro
+Global NewMap TolkMethods.i()
 
 ProcedureC Lua_Tolk_TrySAPI(*l.lua_State)
 	Tolk::TrySAPI(checkboolean(*l,1))
 EndProcedure
-AddMethod("trySAPI",@Lua_Tolk_TrySAPI())
+TolkMethods("trySAPI") = @Lua_Tolk_TrySAPI()
 
 ProcedureC Lua_Tolk_PreferSAPI(*l.lua_State)
 	Tolk::PreferSAPI(checkboolean(*l,1))
 EndProcedure
-AddMethod("preferSAPI",@Lua_Tolk_PreferSAPI())
+TolkMethods("preferSAPI") = @Lua_Tolk_PreferSAPI()
 
 ProcedureC.i Lua_Tolk_DetectScreenReader(*l.lua_State)
 	lua_pushstring(*l, tolk::DetectScreenReader())
 	ProcedureReturn 1
 EndProcedure
-AddMethod("detectScreenReader",@Lua_Tolk_DetectScreenReader())
+TolkMethods("detectScreenReader") = @Lua_Tolk_DetectScreenReader()
 
 ProcedureC.i Lua_Tolk_HasSpeech(*l.lua_State)
 	lua_pushboolean(*l, tolk::HasSpeech())
 	ProcedureReturn 1
 EndProcedure
-AddMethod("hasSpeech",@Lua_Tolk_HasSpeech())
+TolkMethods("hasSpeech") = @Lua_Tolk_HasSpeech()
 
 ProcedureC.i Lua_Tolk_HasBraille(*l.lua_State)
 	lua_pushboolean(*l, tolk::HasBraille())
 	ProcedureReturn 1
 EndProcedure
-AddMethod("hasBraille",@Lua_Tolk_HasBraille())
+TolkMethods("hasBraille") = @Lua_Tolk_HasBraille()
 
 ProcedureC.i Lua_Tolk_Output(*l.lua_State)
 	Protected str.s = PeekS(luaL_checkstring(*l, 1),-1, #PB_UTF8) ; получим первый параметр.
@@ -72,7 +60,7 @@ ProcedureC.i Lua_Tolk_Output(*l.lua_State)
 	lua_pushboolean(*l, tolk::Output(str, interrupt))
 	ProcedureReturn 1
 EndProcedure
-AddMethod("output",@Lua_Tolk_Output())
+TolkMethods("output") = @Lua_Tolk_Output()
 
 ProcedureC.i Lua_Tolk_Speak(*l.lua_State)
 	Protected str.s = PeekS(luaL_checkstring(*l, 1),-1, #PB_UTF8) ; получим первый параметр.
@@ -85,49 +73,41 @@ ProcedureC.i Lua_Tolk_Speak(*l.lua_State)
 	lua_pushboolean(*l, tolk::Speak(str, interrupt))
 	ProcedureReturn 1
 EndProcedure
-AddMethod("speak",@Lua_Tolk_Speak())
+TolkMethods("speak") = @Lua_Tolk_Speak()
 
 ProcedureC.i Lua_Tolk_Braille(*l.lua_State)
 	Protected str.s = PeekS(luaL_checkstring(*l, 1),-1, #PB_UTF8)
 	lua_pushboolean(*l, tolk::Braille(str))
 	ProcedureReturn 1
 EndProcedure
-AddMethod("braille",@Lua_Tolk_Braille())
+TolkMethods("braille") = @Lua_Tolk_Braille()
 
 ProcedureC.i Lua_Tolk_IsSpeaking(*l.lua_State)
 	lua_pushboolean(*l, tolk::IsSpeaking())
 	ProcedureReturn 1
 EndProcedure
-AddMethod("isSpeaking",@Lua_Tolk_IsSpeaking())
+TolkMethods("isSpeaking") = @Lua_Tolk_IsSpeaking()
 
 ProcedureC.i Lua_Tolk_Silence(*l.lua_State)
 	lua_pushboolean(*l, tolk::Silence())
 	ProcedureReturn 1
 EndProcedure
-AddMethod("silence",@Lua_Tolk_Silence())
+TolkMethods("silence") = @Lua_Tolk_Silence()
 
 ProcedureC mtm_Destroy(*l.lua_State)
 	Tolk::Unload()
 EndProcedure
-
-FinishMethods
 
 ;  Главная экспорт процедура.
 ; Её название состоит из двух частей: luaopen_, и название библиотеки. Первая часть предопределена, вторая - произвольная.
 ProcedureCDLL.i luaopen_tolklua(*l.lua_State)
 	Tolk::Load()
 	If Tolk::IsLoaded()
-		Protected Dim FuncsArray.luaL_Reg(ListSize(TolkMethods()))
+		lua_createtable(*l,1, MapSize(TolkMethods()))
 		ForEach TolkMethods()
-			FuncsArray(ListIndex(TolkMethods())) = TolkMethods()
+			lua_pushcfunction(*l, TolkMethods())
+			lua_setfield(*l, -2, MapKey(TolkMethods()))
 		Next
-		lua_createtable(*l,1,ArraySize(FuncsArray()))
-		luaL_setfuncs(*l,@FuncsArray(),0)
-		ForEach TolkMethods()
-			FreeMemory(TolkMethods()\name)
-		Next
-		FreeArray(FuncsArray())
-		FreeList(TolkMethods())
 		lua_newtable(*l)
 		lua_pushcfunction(*l, @mtm_Destroy())
 		lua_setfield(*l, -2, "__gc")
